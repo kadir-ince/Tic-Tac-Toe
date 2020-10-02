@@ -9,8 +9,11 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        NavigationView {
+            Home()
+                .navigationTitle("Tic Tac Toe")
+        }
+        .preferredColorScheme(.dark)
     }
 }
 
@@ -19,3 +22,20 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct Home: View {
+    var body: some View {
+        VStack {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15) {
+                ForEach(0 ..< 9, id: \.self) { _ in
+                    Color.white
+                        .frame(width: (screenWidth - 60)/3, height: (screenWidth - 60)/3)
+                        .cornerRadius(15)
+                }
+            }
+            .padding()
+        }
+    }
+}
+
+let screenWidth = UIScreen.main.bounds.width
