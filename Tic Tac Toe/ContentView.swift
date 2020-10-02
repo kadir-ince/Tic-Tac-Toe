@@ -42,7 +42,6 @@ struct Home: View {
                         Text(moves[index])
                             .font(.system(size: 55))
                             .fontWeight(.heavy)
-//                            .foregroundColor(.black)
                             .foregroundColor(.white)
                     }
                     .frame(width: (screenWidth - 60)/3, height: (screenWidth - 60)/3)
@@ -70,7 +69,7 @@ struct Home: View {
             checkWinner()
         })
         .alert(isPresented: $gameOver, content: {
-            Alert(title: Text("Winner"), message: Text(showMessage), dismissButton: .destructive(Text("Play Again"), action: {
+            Alert(title: Text("Result"), message: Text(showMessage), dismissButton: .destructive(Text("Play Again"), action: {
                 withAnimation(.easeIn(duration: 0.5)) {
                     moves.removeAll()
                     moves = Array(repeating: "", count: 9)
@@ -89,12 +88,19 @@ struct Home: View {
             showMessage = "Player O Won 🎉"
             gameOver.toggle()
         }
+
+        // this if section is will update... 
+        if moves[0] != "", moves[1] != "", moves[2] != "", moves[3] != "", moves[4] != "", moves[5] != "", moves[6] != "", moves[7] != "", moves[8] != "" {
+            showMessage = "Nobody Won ☹️"
+            gameOver.toggle()
+        }
+        
     }
 
     func checkMoves(player: String) -> Bool {
         // horizontal check
         for i in stride(from: 0, to: 9, by: 3) {
-            if moves[i] == player && moves[i+1] == player && moves[i+2] == player {
+            if moves[i] == player, moves[i+1] == player, moves[i+2] == player {
                 return true
             }
         }
@@ -111,10 +117,9 @@ struct Home: View {
         if moves[0] == player && moves[4] == player && moves[8] == player {
             return true
         }
-        if moves[2] == player && moves[4] == player && moves[6] == player {
+        else if moves[2] == player && moves[4] == player && moves[6] == player {
             return true
         }
-
         return false
     }
 }
