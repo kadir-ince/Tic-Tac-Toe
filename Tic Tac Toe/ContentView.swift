@@ -89,7 +89,7 @@ struct Home: View {
             gameOver.toggle()
         }
 
-        // this if section is will update... 
+        // this if section is will update...
         if moves[0] != "", moves[1] != "", moves[2] != "", moves[3] != "", moves[4] != "", moves[5] != "", moves[6] != "", moves[7] != "", moves[8] != "" {
             showMessage = "Nobody Won ☹️"
             gameOver.toggle()
