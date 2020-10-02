@@ -24,13 +24,30 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 struct Home: View {
+    @State var moves: [String] = Array(repeating: "", count: 9)
+    @State var isPlaying = true
     var body: some View {
         VStack {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 15), count: 3), spacing: 15) {
-                ForEach(0 ..< 9, id: \.self) { _ in
-                    Color.white
-                        .frame(width: (screenWidth - 60)/3, height: (screenWidth - 60)/3)
-                        .cornerRadius(15)
+                ForEach(0 ..< 9, id: \.self) { index in
+                    ZStack {
+                        Color.white
+
+                        Text(moves[index])
+                            .font(.system(size: 55))
+                            .fontWeight(.heavy)
+                            .foregroundColor(.black)
+                    }
+                    .frame(width: (screenWidth - 60)/3, height: (screenWidth - 60)/3)
+                    .cornerRadius(15)
+                    .onTapGesture(perform: {
+                        withAnimation(.easeIn(duration: 0.5)) {
+                            if moves[index] == "" {
+                                moves[index] = isPlaying ? "X" : "O"
+                                isPlaying.toggle()
+                            }
+                        }
+                    })
                 }
             }
             .padding()
